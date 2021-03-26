@@ -5,6 +5,9 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from .models import Lead, Agent
 from .forms import LeadForm, LeadModelForm
 
+class SignupView(CreateView):
+    pass
+
 class LandingPageView(TemplateView):
     template_name = "landing.html"
 
