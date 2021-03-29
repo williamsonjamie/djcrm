@@ -3,10 +3,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Lead, Agent
-from .forms import LeadForm, LeadModelForm
-
-class SignupView(CreateView):
-    pass
+from .forms import LeadForm, LeadModelForm, LeadUserCreationForm
 
 class LandingPageView(TemplateView):
     template_name = "landing.html"
@@ -100,4 +97,11 @@ class LeadDeleteView(DeleteView):
 def lead_delete(request, pk):
     lead = Lead.objects.get(id=pk)
     lead.delete()
-    return redirect("/leads/")
+    return redirect("leads:lead-list")
+
+class SignupView(CreateView):
+    template_name = "registration/signup.html"
+    form_class = LeadUserCreationForm
+
+    def get_success_url(self):
+        return reverse("login")
